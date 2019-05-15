@@ -1,8 +1,6 @@
 package com.zhan.securejwt.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +51,28 @@ public class JwtTokenProvider {
 
         return Long.parseLong(claims.getSubject());
 
+    }
 
+
+    public boolean validateToken(String token) {
+
+        try {
+        Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(token);
+        return  true;
+        }
+
+        catch (SignatureException ex) {
+            logger.error("Invalid JWT signature");
+        } catch (MalformedJwtException ex) {
+            logger.error("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            logger.error("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            logger.error("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            logger.error("JWT claims string is empty.");
+        }
+        return false;
 
     }
 
