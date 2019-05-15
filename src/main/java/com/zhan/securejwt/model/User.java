@@ -1,6 +1,7 @@
 package com.zhan.securejwt.model;
 
 
+import io.jsonwebtoken.Jwts;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
