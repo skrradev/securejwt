@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "\"user\"")
@@ -20,15 +21,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-
     private String username;
 
     private String password;
 
-    private String email;
+    @ManyToMany
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id") )
+    private Collection<MyGrantedAuthorities> authorities = new HashSet<>();
 
-    private Collection<? extends GrantedAuthority> authorities;
 
-
+    public User() {
+    }
 }
