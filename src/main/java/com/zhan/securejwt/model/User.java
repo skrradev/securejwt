@@ -26,8 +26,8 @@ public class User {
     private String password;
 
     @ManyToMany
-    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id") )
+    @JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id" , referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
     private Collection<MyGrantedAuthorities> authorities = new HashSet<>();
 
 

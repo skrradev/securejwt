@@ -26,13 +26,17 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-        String jwt = jwtTokenProvider.generateToken(authentication);
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String jwt = jwtTokenProvider.generateToken(authentication);
+
+
 
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 
